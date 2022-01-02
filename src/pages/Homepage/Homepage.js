@@ -6,8 +6,8 @@ const Homepage = () => {
         <div className={styles.homepage}>
             <MenuDirectory/>
         </div>
-    )
-}
+    );
+};
 
 export default Homepage;
 
