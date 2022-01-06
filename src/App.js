@@ -1,8 +1,10 @@
 import React  from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
+
+import withRouter from "./components/HOC/wrapRouter";
 
 import Header from "./components/header/header";
 import Homepage from "./pages/Homepage/Homepage";
@@ -46,6 +48,7 @@ class App extends React.Component {
     }
 
     render() {
+        const { currentUser } = this.props;
         console.log("app.js state after mount ", this.state);
         return ( 
             <div>
@@ -53,21 +56,34 @@ class App extends React.Component {
                 <Routes>
                     <Route path="/" element={<Homepage/>}/>
                     <Route path='/shop' element={<ShopPage/>} />
-                    <Route path='/signin' element={<SignInAndSignUpPage/>} />
+                    <Route
+                        exact
+                        path='/signin'
+                        element={
+                            currentUser ? (
+                                <Navigate to='/' />
+                            ) : (
+                                <SignInAndSignUpPage />
+                            )
+                        }
+                    />
                 </Routes>  
             </div>
         );
     }
 }
 
+const mapStateToProps = ({ user }) => ({
+    currentUser: user.currentUser
+});
 
 const mapDispatchToProps = dispatch => ({
     setCurrentUser: user => dispatch(setCurrentUser(user))
 });
   
 export default connect(
-    null, // mapStateToProps = null
+    mapStateToProps, // mapStateToProps = null
     mapDispatchToProps
-)(App);
+)(withRouter(App));
 
 
