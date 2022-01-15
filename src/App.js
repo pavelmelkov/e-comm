@@ -8,8 +8,10 @@ import withRouter from "./components/HOC/wrapRouter";
 
 import Header from "./components/header/header";
 import Homepage from "./pages/Homepage/Homepage";
-import ShopPage from "./pages/ShopPage/ShopPage";
+import Checkout from "./pages/Checkout/Checkout";
 import SignInAndSignUpPage from "./pages/Sign-in-and-Sign-up/Sign-in-and-Sign-up";
+import CollectionsOverview from "./components/collections-overview/collections-overview";
+import CollectionPage from "./pages/Collection/Collection";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import "./App.css";
 class App extends React.Component {
@@ -55,7 +57,10 @@ class App extends React.Component {
                 <Header/>
                 <Routes>
                     <Route path="/" element={<Homepage/>}/>
-                    <Route path='/shop' element={<ShopPage/>} />
+
+                    <Route path="/shop" element={<CollectionsOverview/>} />
+                    <Route path="/shop/:collectionId" element={<CollectionPage/>} />
+            
                     <Route
                         exact
                         path='/signin'
@@ -67,6 +72,7 @@ class App extends React.Component {
                             )
                         }
                     />
+                    <Route path='/checkout' element={<Checkout/>} />
                 </Routes>  
             </div>
         );
